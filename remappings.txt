@@ -1,0 +1,6 @@
+@eth-optimism/contracts/=lib/optimism/packages/contracts/contracts/optimistic-ethereum/
+@openzeppelin/=lib/openzeppelin-contracts/
+@rari-capital/solmate/=lib/solmate/
+ds-test/=lib/ds-test/src/
+solmate/=lib/solmate/
+nova/=lib/nova/

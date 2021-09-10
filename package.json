@@ -1,0 +1,14 @@
+{
+  "name": "@rari-capital/nova-invariants",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Formal verification and fuzzing of Nova with DappTools.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rari-Capital/nova-invariants.git"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.13"
+  }
+}
