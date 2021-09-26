@@ -29,7 +29,7 @@ contract RegistryTest is DSTestPlus {
     //////////////////////////////////////////////////////////////*/
 
     // TODO: investigate why we can't use prove here
-    function testConnectingExecutionManager(address newExecutionManager) public {
+    function proveConnectingExecutionManager(address newExecutionManager) public {
         registry.connectExecutionManager(newExecutionManager);
         assertEq(registry.L1_NovaExecutionManagerAddress(), newExecutionManager);
     }

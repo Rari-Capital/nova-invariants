@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity 0.7.6;
+pragma abicoder v2;
 
 import {DSTestPlus} from "solmate/src/tests/utils/DSTestPlus.sol";
 
@@ -36,17 +37,21 @@ contract ExecutionManagerTest is DSTestPlus {
                         PROPERTY/SYMBOLIC TESTS
     //////////////////////////////////////////////////////////////*/
 
-    // function proveUpdatingMissingGasEstimate(uint128 newMissingGasEstimate) public {
-    //     executionManager.setMissingGasEstimate(newMissingGasEstimate);
+    function proveUpdatingGasConfig(L1_NovaExecutionManager.GasConfig calldata newGasConfig) external {
+        executionManager.updateGasConfig(newGasConfig);
 
-    //     assertUint128Eq(executionManager.missingGasEstimate(), newMissingGasEstimate);
-    // }
+        (
+            uint32 calldataByteGasEstimate,
+            uint96 missingGasEstimate,
+            uint96 strategyCallGasBuffer,
+            uint32 execCompletedMessageGasLimit
+        ) = executionManager.gasConfig();
 
-    // function proveUpdatingCalldataByteGasEstimate(uint128 newCalldataByteGasEstimate) public {
-    //     executionManager.setCalldataByteGasEstimate(newCalldataByteGasEstimate);
-
-    //     assertUint128Eq(executionManager.calldataByteGasEstimate(), newCalldataByteGasEstimate);
-    // }
+        assertUint32Eq(newGasConfig.calldataByteGasEstimate, calldataByteGasEstimate);
+        assertUint96Eq(newGasConfig.missingGasEstimate, missingGasEstimate);
+        assertUint96Eq(newGasConfig.strategyCallGasBuffer, strategyCallGasBuffer);
+        assertUint32Eq(newGasConfig.execCompletedMessageGasLimit, execCompletedMessageGasLimit);
+    }
 
     function proveFailTransferFromRelayerOutsideOfActiveExec(address token, uint256 amount) public {
         executionManager.transferFromRelayer(token, amount);
