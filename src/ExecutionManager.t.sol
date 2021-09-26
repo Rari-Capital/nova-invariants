@@ -21,13 +21,19 @@ contract ExecutionManagerTest is DSTestPlus {
                               INVARIANTS
     //////////////////////////////////////////////////////////////*/
 
-    // function invariantCalldataByteGasEstimate() public {
-    //     assertUint128Eq(executionManager.calldataByteGasEstimate(), 13);
-    // }
+    function invariantGasConfig() public {
+        (
+            uint32 calldataByteGasEstimate,
+            uint96 missingGasEstimate,
+            uint96 strategyCallGasBuffer,
+            uint32 execCompletedMessageGasLimit
+        ) = executionManager.gasConfig();
 
-    // function invariantMissingGasEstimate() public {
-    //     assertUint128Eq(executionManager.missingGasEstimate(), 200000);
-    // }
+        assertUint32Eq(calldataByteGasEstimate, 13);
+        assertUint96Eq(missingGasEstimate, 200000);
+        assertUint96Eq(strategyCallGasBuffer, 5000);
+        assertUint32Eq(execCompletedMessageGasLimit, 1500000);
+    }
 
     function invariantCurrentExecHash() public {
         assertEq(executionManager.currentExecHash(), executionManager.DEFAULT_EXECHASH());
@@ -37,7 +43,7 @@ contract ExecutionManagerTest is DSTestPlus {
                         PROPERTY/SYMBOLIC TESTS
     //////////////////////////////////////////////////////////////*/
 
-    function proveUpdatingGasConfig(L1_NovaExecutionManager.GasConfig calldata newGasConfig) external {
+    function proveUpdatingGasConfig(L1_NovaExecutionManager.GasConfig calldata newGasConfig) public {
         executionManager.updateGasConfig(newGasConfig);
 
         (
@@ -60,7 +66,7 @@ contract ExecutionManagerTest is DSTestPlus {
     function testExec(
         uint256 nonce,
         address strategy,
-        bytes memory l1Calldata,
+        bytes calldata l1Calldata,
         uint256 gasLimit,
         address recipient,
         uint256 deadline

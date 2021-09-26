@@ -28,7 +28,6 @@ contract RegistryTest is DSTestPlus {
                         PROPERTY/SYMBOLIC TESTS
     //////////////////////////////////////////////////////////////*/
 
-    // TODO: investigate why we can't use prove here
     function proveConnectingExecutionManager(address newExecutionManager) public {
         registry.connectExecutionManager(newExecutionManager);
         assertEq(registry.L1_NovaExecutionManagerAddress(), newExecutionManager);
