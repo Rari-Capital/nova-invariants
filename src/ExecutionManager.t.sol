@@ -43,21 +43,7 @@ contract ExecutionManagerTest is DSTestPlus {
                         PROPERTY/SYMBOLIC TESTS
     //////////////////////////////////////////////////////////////*/
 
-    function proveUpdatingGasConfig(L1_NovaExecutionManager.GasConfig calldata newGasConfig) public {
-        executionManager.updateGasConfig(newGasConfig);
-
-        (
-            uint32 calldataByteGasEstimate,
-            uint96 missingGasEstimate,
-            uint96 strategyCallGasBuffer,
-            uint32 execCompletedMessageGasLimit
-        ) = executionManager.gasConfig();
-
-        assertUint32Eq(newGasConfig.calldataByteGasEstimate, calldataByteGasEstimate);
-        assertUint96Eq(newGasConfig.missingGasEstimate, missingGasEstimate);
-        assertUint96Eq(newGasConfig.strategyCallGasBuffer, strategyCallGasBuffer);
-        assertUint32Eq(newGasConfig.execCompletedMessageGasLimit, execCompletedMessageGasLimit);
-    }
+    function proveUpdatingGasConfig(L1_NovaExecutionManager.GasConfig calldata newGasConfig) public {}
 
     function proveFailTransferFromRelayerOutsideOfActiveExec(address token, uint256 amount) public {
         executionManager.transferFromRelayer(token, amount);
